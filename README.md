@@ -1,5 +1,7 @@
 # Sticky Table Header
 
+Progressively enhance a table so the header sticks as you scroll vertically.
+
 ![Demo](./demo.gif)
 
 This works by cloning the thead and positioning it according to the user's scroll position inside a wrapper element.
