@@ -1,13 +1,4 @@
 const initStickyTableHeader = (tableEl: HTMLElement, height?: number) => {
-    // READ
-
-    const cellWidths = (
-        Array.from(<NodeListOf<HTMLElement>>tableEl.querySelectorAll('tbody tr:first-child td'))
-            .map(el => el.offsetWidth)
-    );
-
-    const tableElWidth = tableEl.offsetWidth;
-
     // WRITE
 
     const theadEl = <HTMLElement>tableEl.querySelector('thead');
@@ -25,26 +16,13 @@ const initStickyTableHeader = (tableEl: HTMLElement, height?: number) => {
         height: height !== undefined ? `${height}px` : undefined,
     });
 
-    // We need to assert the width in case a scroll bar has been added.
-    // This must be equal to the width of the cloned table element.
-    tableEl.style.width = `${tableElWidth}px`;
     theadEl.style.visibility = 'hidden';
 
     Object.assign(clonedTableEl.style, {
-        width: `${tableElWidth}px`,
         position: 'absolute',
         zIndex: '1',
     });
     clonedTableEl.removeChild(clonedTbodyEl)
-
-    clonedTheadCellEls.forEach((cell, index) => {
-        const width = cellWidths[index];
-        if (width) {
-            cell.style.width = `${width}px`;
-        } else {
-            throw new Error(`Width not found for index '${index}'`)
-        }
-    })
 
     const update = () => {
         requestAnimationFrame(() => {
@@ -59,6 +37,28 @@ const initStickyTableHeader = (tableEl: HTMLElement, height?: number) => {
     tableEl.parentElement.appendChild(wrapperEl)
     wrapperEl.appendChild(clonedTableEl);
     wrapperEl.appendChild(tableEl);
+
+    // READ
+
+    const cellWidths = (
+        Array.from(<NodeListOf<HTMLElement>>tableEl.querySelectorAll('tbody tr:first-child td'))
+            .map(el => el.offsetWidth)
+    );
+
+    const tableElWidth = tableEl.offsetWidth;
+
+    // WRITE
+
+    clonedTableEl.style.width = `${tableElWidth}px`;
+
+    clonedTheadCellEls.forEach((cell, index) => {
+        const width = cellWidths[index];
+        if (width) {
+            cell.style.width = `${width}px`;
+        } else {
+            throw new Error(`Width not found for index '${index}'`)
+        }
+    })
 
     wrapperEl.addEventListener('scroll', update);
 
