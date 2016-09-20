@@ -16,6 +16,14 @@ The table should be transformed so that:
 - thead should not stick when scrolling horizontally
 - thead cells should grow/shrink to column contents from tbody
 
+## Installation
+
+```
+npm install sticky-table-header
+```
+
+## Development
+
 ```
 npm install
 npm run compile
