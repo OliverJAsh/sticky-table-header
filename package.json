@@ -14,7 +14,7 @@
     "compile": "rm -rf ./target && mkdir ./target && npm run compileTypescript && npm run compileBrowserify && npm run copy",
     "prepublish": "npm run compileTypescript"
   },
-  "dependencies": {
+  "devDependencies": {
     "browserify": "^13.1.0",
     "typescript": "^2.0.2"
   }
