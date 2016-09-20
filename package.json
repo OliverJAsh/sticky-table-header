@@ -9,7 +9,7 @@
     "cleanTypescript": "rm -rf ./target-typescript && mkdir ./target-typescript",
     "cleanBrowserify": "rm -rf ./target-browserify && mkdir ./target-browserify",
     "compileTypescript": "npm run cleanTypescript && tsc --project . --outdir ./target-typescript",
-    "compileBrowserify": "npm run cleanBrowserify && browserify ./target-typescript/example.js --outfile ./target-browserify/example.js && browserify ./target-typescript/main.js --standalone stickyTableHeader --outfile ./target-browserify/main.js",
+    "compileBrowserify": "npm run cleanBrowserify && browserify ./target-typescript/example.js --outfile ./target-browserify/example.js && browserify ./target-typescript/main.js --standalone initStickyTableHeader --outfile ./target-browserify/main.js",
     "copy": "cp ./src/example.html ./target-browserify/{example,main}.js ./target",
     "compile": "rm -rf ./target && mkdir ./target && npm run compileTypescript && npm run compileBrowserify && npm run copy",
     "prepublish": "npm run compile"

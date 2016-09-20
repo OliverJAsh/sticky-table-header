@@ -19,8 +19,13 @@ The table should be transformed so that:
 ## Installation
 
 ```
+# Distributed as a UMD module with the global name `initStickyTableHeader`
 npm install sticky-table-header
 ```
+
+## Example
+
+See [code example](./src/example.html).
 
 ## Development
 
