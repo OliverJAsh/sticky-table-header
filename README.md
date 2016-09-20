@@ -22,3 +22,7 @@ npm run compile
 http-server -c-1 ./target
 # Once the server is running, see /example.html
 ```
+
+## API
+
+### `(tableEl: HTMLTableElement, height?: number): { destroy: () => void, applyColumnWidths: () => void }`

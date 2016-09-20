@@ -1,4 +1,4 @@
-const initStickyTableHeader = (tableEl: HTMLElement, height?: number) => {
+const initStickyTableHeader = (tableEl: HTMLTableElement, height?: number): { destroy: () => void, applyColumnWidths: () => void } => {
     // WRITE
 
     const theadEl = <HTMLElement>tableEl.querySelector('thead');
@@ -24,49 +24,48 @@ const initStickyTableHeader = (tableEl: HTMLElement, height?: number) => {
     });
     clonedTableEl.removeChild(clonedTbodyEl)
 
-    const update = () => {
-        requestAnimationFrame(() => {
-            // READ
-            const wrapperElScrollTop = wrapperEl.scrollTop;
-            // WRITE
-            clonedTableEl.style.top = `${wrapperElScrollTop}px`;
-        });
-    }
-    update();
-
     tableEl.parentElement.appendChild(wrapperEl)
     wrapperEl.appendChild(clonedTableEl);
     wrapperEl.appendChild(tableEl);
 
-    // READ
+    const applyOffset = () => {
+        // READ
+        const wrapperElScrollTop = wrapperEl.scrollTop;
+        // WRITE
+        clonedTableEl.style.top = `${wrapperElScrollTop}px`;
+    }
 
-    const cellWidths = (
-        Array.from(<NodeListOf<HTMLElement>>tableEl.querySelectorAll('tbody tr:first-child td'))
-            .map(el => el.offsetWidth)
-    );
+    const applyColumnWidths = () => {
+        // READ
+        const cellWidths = (
+            Array.from(<NodeListOf<HTMLElement>>tableEl.querySelectorAll('tbody tr:first-child td'))
+                .map(el => el.offsetWidth)
+        );
+        const tableElWidth = tableEl.offsetWidth;
 
-    const tableElWidth = tableEl.offsetWidth;
+        // WRITE
+        clonedTableEl.style.width = `${tableElWidth}px`;
+        clonedTheadCellEls.forEach((cell, index) => {
+            const width = cellWidths[index];
+            if (width) {
+                cell.style.width = `${width}px`;
+            } else {
+                throw new Error(`Width not found for index '${index}'`)
+            }
+        })
+    }
 
-    // WRITE
+    applyOffset();
+    applyColumnWidths();
 
-    clonedTableEl.style.width = `${tableElWidth}px`;
-
-    clonedTheadCellEls.forEach((cell, index) => {
-        const width = cellWidths[index];
-        if (width) {
-            cell.style.width = `${width}px`;
-        } else {
-            throw new Error(`Width not found for index '${index}'`)
-        }
-    })
-
-    wrapperEl.addEventListener('scroll', update);
+    const scrollHandler = () => requestAnimationFrame(applyOffset);
+    wrapperEl.addEventListener('scroll', scrollHandler);
 
     const destroy = () => {
-        wrapperEl.removeEventListener('scroll', update);
+        wrapperEl.removeEventListener('scroll', scrollHandler);
     };
 
-    return destroy;
+    return { destroy, applyColumnWidths };
 };
 
 export default initStickyTableHeader;
