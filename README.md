@@ -33,4 +33,4 @@ http-server -c-1 ./target
 
 ## API
 
-### `(tableEl: HTMLTableElement, height?: number): { destroy: () => void, applyColumnWidths: () => void }`
+### `(tableEl: HTMLTableElement, height?: number) => { destroy: () => void, applyColumnWidths: () => void }`
