@@ -1,7 +1,7 @@
 const initStickyTableHeader = (tableEl: HTMLTableElement, height?: number): { destroy: () => void, applyColumnWidths: () => void } => {
     // WRITE
 
-    const theadEl = <HTMLElement>tableEl.querySelector('thead');
+    const theadEl = tableEl.querySelector('thead');
     if (!theadEl) throw new Error('Could not find thead');
 
     const clonedTableEl = <HTMLElement>tableEl.cloneNode(true);
