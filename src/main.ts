@@ -38,23 +38,27 @@ const initStickyTableHeader = (tableEl: HTMLTableElement, height?: number): { de
     }
 
     const applyColumnWidths = () => {
-        // READ
-        const cellWidths = (
-            Array.from(<NodeListOf<HTMLElement>>tableEl.querySelectorAll('tbody tr:first-child td'))
-                .map(el => el.offsetWidth)
-        );
-        const tableElWidth = tableEl.offsetWidth;
+        const firstRowEl = tbodyEl.querySelector('tr');
 
-        // WRITE
-        clonedTableEl.style.width = `${tableElWidth}px`;
-        clonedTheadCellEls.forEach((cell, index) => {
-            const width = cellWidths[index];
-            if (width) {
-                cell.style.width = `${width}px`;
-            } else {
-                throw new Error(`Width not found for index '${index}'`)
-            }
-        })
+        if (firstRowEl) {
+            // READ
+            const cellWidths = (
+                Array.from(firstRowEl.querySelectorAll('td'))
+                    .map(el => el.offsetWidth)
+            );
+            const tableElWidth = tableEl.offsetWidth;
+
+            // WRITE
+            clonedTableEl.style.width = `${tableElWidth}px`;
+            clonedTheadCellEls.forEach((cell, index) => {
+                const width = cellWidths[index];
+                if (width) {
+                    cell.style.width = `${width}px`;
+                } else {
+                    throw new Error(`Width not found for index '${index}'`)
+                }
+            })
+        }
     }
 
     applyOffset();
