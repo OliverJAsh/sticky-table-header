@@ -3,6 +3,8 @@ const initStickyTableHeader = (tableEl: HTMLTableElement, height?: number): { de
 
     const theadEl = tableEl.querySelector('thead');
     if (!theadEl) throw new Error('Could not find thead');
+    const tbodyEl = tableEl.querySelector('tbody');
+    if (!tbodyEl) throw new Error('Could not find tbody');
 
     const clonedTableEl = <HTMLElement>tableEl.cloneNode(true);
     const clonedTbodyEl = clonedTableEl.querySelector('tbody');
