@@ -6,7 +6,9 @@
         "declaration": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "sourceMap": true,
+        "inlineSources": true
     },
     "files": [
         "./src/example.ts",
